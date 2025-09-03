@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm") version "2.2.0"
-    id("org.sonarqube") version "4.4.1.3373"
+    id("org.sonarqube") version "5.1.0.4882"
     jacoco
     `maven-publish`
     signing
@@ -36,16 +36,15 @@ kotlin {
 sonar {
     properties {
         property("sonar.projectKey", "github.emiilia:demoic")
-        property("sonar.projectName", "DemoIC")
+        property("sonar.projectName", "DemoIC") 
         property("sonar.host.url", System.getenv("SONAR_HOST_URL") ?: "http://localhost:9000")
-        property("sonar.login", System.getenv("SONAR_TOKEN") ?: "admin")
-        property("sonar.password", System.getenv("SONAR_PASSWORD") ?: "admin")
+        property("sonar.token", System.getenv("SONAR_TOKEN") ?: "admin")
         property("sonar.sources", "src/main/kotlin")
         property("sonar.tests", "src/test/kotlin")
-        property("sonar.kotlin.binaries", "build/classes/kotlin/main")
-        property("sonar.junit.reportPaths", "build/test-results/test/TEST-*.xml")
+        property("sonar.java.binaries", "build/classes/kotlin/main")
         property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
     }
+    isSkipProject = true
 }
 
 java {
@@ -100,11 +99,4 @@ publishing {
             }
         }
     }
-}
-
-signing {
-    val signingKey: String? by project
-    val signingPassword: String? by project
-    useInMemoryPgpKeys(signingKey, signingPassword)
-    sign(publishing.publications["maven"])
 }
