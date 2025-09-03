@@ -92,7 +92,7 @@ publishing {
             val releasesRepoUrl = "http://localhost:8081/repository/maven-releases/"
             val snapshotsRepoUrl = "http://localhost:8081/repository/maven-snapshots/"
             url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
-            
+            isAllowInsecureProtocol = true
             credentials {
                 username = System.getenv("NEXUS_USERNAME") ?: "admin"
                 password = System.getenv("NEXUS_PASSWORD") ?: "admin123"
