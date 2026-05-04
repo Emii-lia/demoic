@@ -2,6 +2,13 @@ pipeline {
     agent any
     environment {
         DOCKER_HUB_TOKEN = credentials('dockerhub-token')
+	EMAIL_RECEIVER = credentials('email-receiver')
+    }
+    post {
+    	failure {
+		emailext body: "The build $BUILD_NUMBER failed",
+		recipientProviders:[requestor()], subject: 'build', to:"$EMAIL_RECEIVER"
+	}
     }
     stages {
         stage("Git checkout") {
